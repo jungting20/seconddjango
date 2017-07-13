@@ -33,4 +33,6 @@ urlpatterns = [
 #값으로 되는거지 이 설명을 안써줬네
 #궁금하면 컨트롤 클릭해서 들어가보면 자세히 알려준다
 #url(r'^이렇게하고 리턴값 자체가 그 유알엘이야 들어가봐 궁금하면
+#아마 static 메서드가 정적파일을 관리해주는거 같다
+#이게 매핑 값임 매핑이 여기서 되는거임 세팅에서는 그냥 아무것도안됨 매핑은 꼭여기서
 urlpatterns +=static('upload_files',document_root=settings.MEDIA_ROOT)

@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #imageField 필드 클래스로 지정하는 upload_to 인자는 항상 이 경로 아래에 위치하게 됨
 #그러니 URL은 저걸로 접근하고
 #MEDIA_ROOT의 매핑 키임 그러니까 그냥 변수라고 생각하면 됨
+#매핑의 과정은 여기서 되는게아니고 urls.py에서 static 메서드가 해준다
 MEDIA_URL = '/upload_files/'
 #여기서 앞에 지정해준곳에 파일 업로드가 이루어짐!!!이거 또한 중요함
 #그러니까 C:\\fileupload2/uploads 여기에 들어간다 이거지
