@@ -26,6 +26,11 @@ urlpatterns = [
     #패턴을 묶는 클라스
     #ctrl shift i 누르면 이동함 컨트롤 클릭하는 번거로움
     url(r'^photos/(?P<pk>\d+)/$', detail, name='detail'),
+    # url(r'^photos/(?P<pk>\d+)/$', detail, name='detail',kwargs={'hidden':True}),
+    #이런식으로 kwargs에 인자값으로 임의의 값을 넘길 수있음 저걸 받아서 뭐 이것저것
+    #할수있지
+    #받을때는 인자로 받으면 된다
+    #def aa(hidden = False)뭐 이런식으로 ㅋ
 ]
 #from django.conf.urls.static import static upload_files의 주소를
 #저 document_root의 값으로 매핑 하겠다는 소리야
@@ -36,3 +41,5 @@ urlpatterns = [
 #아마 static 메서드가 정적파일을 관리해주는거 같다
 #이게 매핑 값임 매핑이 여기서 되는거임 세팅에서는 그냥 아무것도안됨 매핑은 꼭여기서
 urlpatterns +=static('upload_files',document_root=settings.MEDIA_ROOT)
+#가장 중요한건 static함수는 셋팅에서 DEBUG=True 인경우에만 동작한다는 거다
+#static 파일은 이런거 안해줘도 된다 그냥 알아서 해줌

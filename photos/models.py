@@ -20,11 +20,15 @@ class Photo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)         #생성일
 
     #장고는 객체 하나 지울때 이게 실행된다네
+    #이걸 해준 이유가 파일업로드한거 객체지우니까 파일은 안지워짐
+    #파일까지 지우려고 이거한거임
     def delete(self, *args, **kwargs):
+
         self.image.delete()
         self.filtered_image.delete()
         #이부분이 객체를 삭제하는 부분임
         #만약 내가 코드짜서 지우려면 여길 지우고 직접 구현하면됨
         #그러니 이 뜻은 모델을 지워라 이거임 데이터베이스 삭제를 말하는 듯
+        #그니까 상속받은애의 딜리트를 실행하라 이거
         super(Photo,self).delete(*args,**kwargs)
 

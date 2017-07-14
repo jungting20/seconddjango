@@ -13,9 +13,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL
+from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, STATIC_ROOT
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+#자 여기서 정리
+#static 파일과 media 파일 static파일은 html css 같은거
+#media는 그냥 리얼 진짜 파일 ㅋ 두개 사용하는 경로가 다름
+
 
 #imageField 필드 클래스로 지정하는 upload_to 인자는 항상 이 경로 아래에 위치하게 됨
 #그러니 URL은 저걸로 접근하고
@@ -28,7 +33,7 @@ MEDIA_URL = '/upload_files/'
 #이거야
 #왜냐하면 저기에있는 저 BASE_DIR이 이 프로젝트의 기본 경로거든
 MEDIA_ROOT  = os.path.join('C:\\fileupload2','uploads')
-
+#이 다음 부터의 경로를 모델에 upload_to에 지정해주는 거지
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -137,4 +142,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+#여기에 있구만 이것이 장고고수
+#얘도 똑같이 ROOT 이런거있음
+
 STATIC_URL = '/static/'
+
+#해본 결과 이걸 설정해주지 않으면 기본적으로 앱 안에있는 static 폴더에 있는걸 찾고
+#staticfiles_dir를 설정해주면 추가로 여기에 등록이 되어있는 경로에서 까지 찾는다
+#그리고 이거 설정해 줄때 ,(콤마)를 써줘서 이게 듀플이란건 알려줘야함
+#테스트해보고싶으면 manage.py에서 findstatic 이름
+#해보면 찾을 수 있다
+#그러니까
+#이거랑 static_url 이랑 헷갈리면 안됨
+#아시다시피 static_url은 static_root를 참조함 그니까 매핑이지 ㅋ
+#static_root는 실 서비스를 위한 거임
+#DEVUG =True 가 되어 있으면 static_root 설정은 동작하지 않는다
+#보통은 웹서버안에 정적파일 넣어놓고쓰니까 서비스를 위해 씀
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,'static'),
+    #이런식으로도 가능함
+    ('byebye',os.path.join(BASE_DIR, 'static2'),),
+
+)
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
