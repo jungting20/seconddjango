@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, STATIC_ROOT
+from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS, STATIC_ROOT, LOGIN_REDIRECT_URL
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,7 +34,6 @@ MEDIA_URL = '/upload_files/'
 #왜냐하면 저기에있는 저 BASE_DIR이 이 프로젝트의 기본 경로거든
 MEDIA_ROOT  = os.path.join('C:\\fileupload2','uploads')
 #이 다음 부터의 경로를 모델에 upload_to에 지정해주는 거지
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -57,8 +56,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'photos',
-]
+    'profiles',
+    'debug_toolbar',
 
+]
+#디버그 툴바용
+INTERNAL_IPS = ["127.0.0.1"]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'pystargram.urls'
@@ -76,6 +80,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
+        #앱별로 디렉토리를 사용할지 여부
+        #그니까 앱안에 templates 가있으면 그걸 사용한다는 거임 다른템플릿말고
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,9 +134,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -144,7 +150,8 @@ USE_TZ = True
 
 #여기에 있구만 이것이 장고고수
 #얘도 똑같이 ROOT 이런거있음
-
+#{%static%} 이걸로 이거 불러옴
+#결론 {% static %} > STATIC_URL 불러오고 > 얘는 또 STATIC_ROOT를 참조해서 가져옴
 STATIC_URL = '/static/'
 
 #해본 결과 이걸 설정해주지 않으면 기본적으로 앱 안에있는 static 폴더에 있는걸 찾고
@@ -158,10 +165,12 @@ STATIC_URL = '/static/'
 #static_root는 실 서비스를 위한 거임
 #DEVUG =True 가 되어 있으면 static_root 설정은 동작하지 않는다
 #보통은 웹서버안에 정적파일 넣어놓고쓰니까 서비스를 위해 씀
+#보통 collectionstatic 인가 써서 한곳으로 모으고 static_root로 거길 참조한다
+#아마 템플릿에서 {% load 해서 참조할때 편하게 이걸로 url로 묶고 그걸 root가 참조)
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
-    #이런식으로도 가능함
-    ('byebye',os.path.join(BASE_DIR, 'static2'),),
-
 )
 STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
+#로그인후 리다이렉트 시킬 디폴트
+LOGIN_REDIRECT_URL='/photos/upload/'

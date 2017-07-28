@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block page_title %}Pystagram{% endblock %}</title>
+{#{% static %} 이건 {% if나 for  %}처럼 정해진 문법임 그냥 static_url에 정해진거 불러옴#}
+    <script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js'%}"></script>
+
+</head>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>

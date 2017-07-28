@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+{#    as_p를하면 p태그로 감싸서 출력됨!!#}
+    {{ form.as_p }}
+   <p>
+       <button type="submit">저장</button>
+   </p>
+</form>
+{% endblock %}
+
